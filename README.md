@@ -1,29 +1,28 @@
 # Uzbekistan Demos
 
-**FastAPI va JavaScript loyihalari · Проекты на FastAPI и JavaScript**  
-Python, JavaScript, REST API, PostgreSQL · Namangan, O‘zbekiston
+Python va JavaScript’da yozilgan, O‘zbekiston uchun moslashtirilgan ikkita demo. Interfeys o‘zbek va rus tillarida ishlaydi.
 
-Savdo dasturlari, veb-ilovalar va mahalliy integratsiyalar. Dastur xavfsizligini tekshirish va muammolarni tuzatish bilan ham shug‘ullanaman.
+## Demolar / Возможности
 
-**Fullstack-разработчик · AI Engineer** · Наманган, Узбекистан  
-Разработка веб-приложений, API, интеграции и тестирование безопасности продукта.
-
-## Loyihalar / Проекты
-
-| Loyiha | Nima qiladi / Что показывает |
-| --- | --- |
-| [Keng POS](https://github.com/NiKenguru/keng-releases) | Windows kassasi / Касса для кафе с заказами, печатью чеков и отчётами. Публичные релизы и руководство. |
-| [Valyuta kurslari / Курсы валют](portfolio/server.py) | Интеграция с JSON API Центрального банка Узбекистана, нормализация номинала, представление в UZS. |
-| [Bilimlar bazasi / База знаний](portfolio/index.html) | Демонстрационный справочник по Keng POS с поиском ответов на узбекском и русском языках. |
+- **Valyuta kurslari / Курсы валют.** Загрузка данных из JSON API Центрального банка Узбекистана. Курс приводится к одной единице валюты и отображается в сумах с датой вступления в силу.
+- **Bilimlar bazasi / База знаний.** Поиск по встроенному справочнику условного кассового приложения на узбекском и русском. Ответы сопровождаются идентификаторами записей.
 
 ## Ishga tushirish / Запуск
 
 ```bash
-python -m pip install -r portfolio/requirements.txt
-python -m uvicorn server:app --app-dir portfolio --host 127.0.0.1 --port 8000
+python -m pip install -r requirements.txt
+python -m uvicorn server:app --host 127.0.0.1 --port 8000
 ```
 
-Откройте http://127.0.0.1:8000. Документация REST API доступна на /docs. Поиск работает на встроенных демонстрационных заметках и возвращает идентификаторы источников. Поиск лексический. LLM и векторная база планируются отдельно. Для загрузки курсов нужен доступ к cbu.uz.
+Откройте http://127.0.0.1:8000. Документация API доступна по адресу http://127.0.0.1:8000/docs.
 
-- [Документация JSON API ЦБ Узбекистана](https://cbu.uz/en/arkhiv-kursov-valyut/veb-masteram/)
-- [Full Stack FastAPI Template](https://github.com/fastapi/full-stack-fastapi-template) — открытый MIT-референс для перехода на React и PostgreSQL. Демонстрации в этой ветке написаны отдельно.
+| Метод | Назначение |
+| --- | --- |
+| `GET /api/rates` | Курсы USD, EUR, RUB и KZT к UZS. Требуется доступ к cbu.uz. |
+| `GET /api/knowledge?q=hisobot&lang=uz` | Лексический поиск по справочнику. Параметр `lang` принимает `uz` или `ru`. |
+
+- `server.py` — приложение FastAPI, клиент ЦБ и поиск по справочнику.
+- `index.html` — двуязычный интерфейс на JavaScript.
+- `requirements.txt` — зависимости Python.
+
+[Документация JSON API Центрального банка Республики Узбекистан](https://cbu.uz/en/arkhiv-kursov-valyut/veb-masteram/)
